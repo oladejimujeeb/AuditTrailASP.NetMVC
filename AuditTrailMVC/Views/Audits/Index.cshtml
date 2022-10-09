@@ -1,0 +1,107 @@
+﻿@model IEnumerable<AuditTrailMVC.Models.Audit>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ControllerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActionName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IpAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsFirstLogin)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VisitDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoggedInAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoggedOutAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LoginStatus)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PageAccessed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SessionId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UrlReferrer)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Area)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ControllerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActionName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IpAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsFirstLogin)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisitDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoggedInAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoggedOutAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LoginStatus)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PageAccessed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SessionId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UrlReferrer)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.AuditId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.AuditId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.AuditId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
