@@ -32,6 +32,7 @@ namespace AuditTrailMVC
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("ConnectionString")));
+           
             services.AddDatabaseDeveloperPageExceptionFilter();
             //services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -41,11 +42,12 @@ namespace AuditTrailMVC
             services.AddScoped<IAuditRepository, AuditRepository>();
             services.AddSession(options => 
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(30);
+                //options.IdleTimeout = TimeSpan.FromMinutes(30);
                 options.Cookie.Domain = "mujib";
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
+           
            
         }
 

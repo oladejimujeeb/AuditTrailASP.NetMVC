@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using AuditTrailMVC.Data;
+﻿using AuditTrailMVC.Data;
+using AuditTrailMVC.Filters;
 using AuditTrailMVC.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Linq;
 using System.Security.Claims;
-using AuditTrailMVC.Filters;
-using System.Threading;
+using System.Threading.Tasks;
 
 namespace AuditTrailMVC.Controllers
 {
@@ -67,7 +64,7 @@ namespace AuditTrailMVC.Controllers
             {
                 student.Id = Guid.NewGuid();
                 await _context.Student.AddAsync(student);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(User?.FindFirst(ClaimTypes.NameIdentifier).Value);
                 return RedirectToAction(nameof(Index));
             }
             return View(student);
@@ -105,8 +102,10 @@ namespace AuditTrailMVC.Controllers
             {
                 try
                 {
-                     _context.Update(student);
-                    await _context.SaveChangesAsync();
+                    var oldRecord = await _context.Student.FindAsync(id);
+
+                    _context.Entry(oldRecord).CurrentValues.SetValues(student);
+                    await _context.SaveChangesAsync(User?.FindFirst(ClaimTypes.NameIdentifier).Value);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -149,7 +148,7 @@ namespace AuditTrailMVC.Controllers
         {
             var student = await _context.Student.FindAsync(id);
             _context.Student.Remove(student);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(User?.FindFirst(ClaimTypes.NameIdentifier).Value);
             return RedirectToAction(nameof(Index));
         }
 
